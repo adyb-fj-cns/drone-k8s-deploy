@@ -35,4 +35,9 @@ fi
 kubectl config set-context default --cluster=default --user=${PLUGIN_KUBERNETES_USER}
 kubectl config use-context default
 
+kubectl get nodes
+
+#if [ ! -z ${PLUGIN_KUBERNETES_COMMAND} ]; then
+#  exec "${PLUGIN_KUBERNETES_COMMAND}"
+#fi
 exec "$@"
