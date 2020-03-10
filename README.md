@@ -27,9 +27,10 @@ name: default
 steps:
 
 - name: test
-  image: alpine
+  image: python
   commands:
-  - echo Testing
+  - pip install -r requirements.txt
+  - pytest
 
 - name: publish 
   image: plugins/docker
@@ -52,9 +53,8 @@ steps:
   - kubectl config set-context $KUBERNETES_CLUSTER --cluster=$KUBERNETES_CLUSTER --user=$KUBERNETES_USER
   - kubectl config use-context $KUBERNETES_CLUSTER
   - kubectl get nodes
-  - ls
-  - kubectl apply -f ./k8s.yml
-  - kubectl get pods
+  - export DOCKER_TAG=${DRONE_COMMIT_SHA:0:7}
+  - cat k8s.yml | envsubst | kubectl apply -f -
 ```
 
 ## Links
